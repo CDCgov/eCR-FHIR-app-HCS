@@ -35,6 +35,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -97,8 +98,8 @@ public class BackendAuthorizationServiceImpl implements AuthorizationService {
     logger.debug(" JWT {}", map.get("client_assertion"));
 
     logger.info(" Request {}", request);
-
-    ResponseEntity<?> response = resTemplate.postForEntity(tokenEndpoint, request, Response.class);
+    
+	ResponseEntity<?> response = resTemplate.postForEntity(tokenEndpoint, request, Response.class);
     logger.info(" Response Body = ", response.getBody());
     return new JSONObject(Objects.requireNonNull(response.getBody()));
   }
@@ -113,6 +114,10 @@ public class BackendAuthorizationServiceImpl implements AuthorizationService {
       logger.error(" Message {}", e.getMessage());
       logger.error(
           "Error in Getting the AccessToken for the client: {}", fsd.getFhirServerBaseURL(), e);
+      if (e instanceof HttpStatusCodeException) {
+    	  HttpStatusCodeException exc = (HttpStatusCodeException) e;
+		  logger.error("statusCode: {}, body: {}", exc.getStatusCode(), exc.getResponseBodyAsString());
+      }      
       return null;
     }
   }

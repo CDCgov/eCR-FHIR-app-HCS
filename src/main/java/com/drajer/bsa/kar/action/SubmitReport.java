@@ -18,6 +18,7 @@ import com.drajer.bsa.model.HealthcareSetting;
 import com.drajer.bsa.model.KarExecutionState;
 import com.drajer.bsa.model.KarProcessingData;
 import com.drajer.bsa.model.PublicHealthAuthority;
+import com.drajer.bsa.model.PublicHealthMessage;
 import com.drajer.bsa.routing.impl.DirectTransportImpl;
 import com.drajer.bsa.routing.impl.RestfulTransportImpl;
 import com.drajer.bsa.service.PublicHealthAuthorityService;
@@ -27,6 +28,8 @@ import com.drajer.sof.utils.FhirContextInitializer;
 import io.micrometer.core.instrument.util.StringUtils;
 import java.io.InputStream;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
@@ -35,7 +38,9 @@ import org.hl7.fhir.instance.model.api.IBaseResource;
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.DataRequirement;
 import org.hl7.fhir.r4.model.Duration;
+import org.hl7.fhir.r4.model.MessageHeader;
 import org.hl7.fhir.r4.model.Resource;
+import org.hl7.fhir.r4.model.ResourceType;
 import org.hl7.fhir.r4.model.UriType;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -379,12 +384,49 @@ public class SubmitReport extends BsaAction {
         data.addActionOutput(actionId, responseBundle);
 
         logger.info(" Adding Response Bundle to output using id {}", responseBundle.getId());
-
+        createPublicHealthMessageForFhir(data, BsaTypes.getActionString(type), bundleToSubmit, responseBundle);
         data.addActionOutputById(responseBundle.getId(), responseBundle);
       } else {
         logger.error("Response BUNDLE IS NULL");
       }
     }
+  }
+
+	private void createPublicHealthMessageForFhir(KarProcessingData kd, String actionType, Bundle bundleSubmitted,
+			Bundle response) {	  
+	  PublicHealthMessage msg = new PublicHealthMessage();
+      msg.setFhirServerBaseUrl(kd.getNotificationContext().getFhirServerBaseUrl());
+      msg.setPatientId(kd.getNotificationContext().getPatientId());
+      msg.setNotifiedResourceId(kd.getNotificationContext().getNotificationResourceId());
+      msg.setNotifiedResourceType(kd.getNotificationContext().getNotificationResourceType());
+      msg.setNotificationId(kd.getNotificationContext().getId().toString());
+      msg.setxCorrelationId(kd.getxCorrelationId());
+      msg.setxRequestId(kd.getxRequestId());
+      if (kd.getNotificationContext().getNotificationResourceType().equals(ResourceType.Encounter.toString())) {
+    	  msg.setEncounterId(msg.getNotifiedResourceId());
+      } else {
+    	  msg.setEncounterId("Unknown");
+      }
+      msg.setSubmittedFhirData(jsonParser.encodeResourceToString(bundleSubmitted));
+      
+      msg.setSubmittedMessageType(bundleSubmitted.getResourceType().name());
+      msg.setSubmittedDataId(response.getId());
+      MessageHeader header = BsaServiceUtils.findMessageHeaderAndDocumentReferences(bundleSubmitted, new ArrayList<>());
+      msg.setSubmittedMessageId(header.getId());
+      msg.setSubmissionTime(Date.from(Instant.now()));
+      msg.setInitiatingAction(actionType + kd.getScheduledJobData().getJobId());
+      msg.setKarUniqueId(kd.getKar().getVersionUniqueId());
+      // Update Version and Matched Trigger Status
+      if (kd.getPhm() != null) {
+    	  msg.setSubmittedVersionNumber(kd.getPhm().getSubmittedVersionNumber() + 1);
+      } else {
+    	  msg.setSubmittedVersionNumber(phDao.getMaxVersionId(msg) + 1);
+      }
+      
+      PublicHealthMessage phm = phDao.saveOrUpdate(msg);
+      kd.setPhm(phm);
+      logger.info("Public Health message created successfully with submittedDataId: {} version: {} XrequestId: {}",
+    		  msg.getSubmittedDataId(), msg.getSubmittedVersionNumber(), kd.getxRequestId());      
   }
 
   protected String getSubmissionOperation() {

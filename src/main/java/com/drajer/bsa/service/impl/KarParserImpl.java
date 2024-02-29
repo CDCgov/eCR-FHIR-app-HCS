@@ -9,6 +9,8 @@ import com.drajer.bsa.ehr.subscriptions.SubscriptionGeneratorService;
 import com.drajer.bsa.kar.action.CheckResponse;
 import com.drajer.bsa.kar.action.CreateReport;
 import com.drajer.bsa.kar.action.EvaluateMeasure;
+import com.drajer.bsa.kar.action.ExecuteReportingActions;
+import com.drajer.bsa.kar.action.InitiateReporting;
 import com.drajer.bsa.kar.action.SubmitReport;
 import com.drajer.bsa.kar.action.ValidateReport;
 import com.drajer.bsa.kar.condition.BsaCqlCondition;
@@ -719,6 +721,9 @@ public class KarParserImpl implements KarParser {
     } else if (action.getType() == ActionType.CREATE_REPORT) {
       CreateReport cr = (CreateReport) action;
       cr.setPhDao(phDao);
+    } else if (action.getType() == ActionType.EXECUTE_REPORTING_WORKFLOW) {
+      ExecuteReportingActions era = (ExecuteReportingActions) action;
+      era.setPhDao(phDao);
     }
 
     art.populateDefaultQueries(action);

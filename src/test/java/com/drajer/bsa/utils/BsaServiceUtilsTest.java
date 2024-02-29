@@ -43,6 +43,7 @@ import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.DataRequirement;
 import org.hl7.fhir.r4.model.DocumentReference;
+import org.hl7.fhir.r4.model.Encounter;
 import org.hl7.fhir.r4.model.MessageHeader;
 import org.hl7.fhir.r4.model.Parameters;
 import org.hl7.fhir.r4.model.Parameters.ParametersParameterComponent;
@@ -391,5 +392,13 @@ public class BsaServiceUtilsTest {
     Patient patient = new Patient();
     Boolean cdaData = BsaServiceUtils.hasCdaData(patient);
     assertFalse(cdaData);
+  }
+  
+  @Test
+  public void testFindEncounterFromBundle() {
+	  Bundle bundle = fhirContext.newJsonParser().parseResource(Bundle.class,
+			  BsaServiceUtilsTest.class.getResourceAsStream("/R4/Bundle/sample-bundle.json"));
+	  Encounter encounter = BsaServiceUtils.findEncounterFromBundle(bundle);
+	  assertNotNull(encounter);
   }
 }
