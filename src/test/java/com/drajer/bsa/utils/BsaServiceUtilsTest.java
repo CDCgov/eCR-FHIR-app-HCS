@@ -393,12 +393,16 @@ public class BsaServiceUtilsTest {
     Boolean cdaData = BsaServiceUtils.hasCdaData(patient);
     assertFalse(cdaData);
   }
-  
+
   @Test
   public void testFindEncounterFromBundle() {
-	  Bundle bundle = fhirContext.newJsonParser().parseResource(Bundle.class,
-			  BsaServiceUtilsTest.class.getResourceAsStream("/R4/Bundle/sample-bundle.json"));
-	  Encounter encounter = BsaServiceUtils.findEncounterFromBundle(bundle);
-	  assertNotNull(encounter);
+    Bundle bundle =
+        fhirContext
+            .newJsonParser()
+            .parseResource(
+                Bundle.class,
+                BsaServiceUtilsTest.class.getResourceAsStream("/R4/Bundle/sample-bundle.json"));
+    Encounter encounter = BsaServiceUtils.findEncounterFromBundle(bundle);
+    assertNotNull(encounter);
   }
 }

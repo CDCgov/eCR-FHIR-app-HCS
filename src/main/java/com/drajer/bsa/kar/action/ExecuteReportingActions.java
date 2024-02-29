@@ -9,11 +9,9 @@ import com.drajer.bsa.model.KarProcessingData;
 import com.drajer.bsa.model.NotificationContext;
 import com.drajer.bsa.model.PublicHealthMessage;
 import com.drajer.bsa.utils.BsaServiceUtils;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.commons.lang3.ObjectUtils;
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Encounter;
@@ -26,7 +24,7 @@ public class ExecuteReportingActions extends BsaAction {
   private final Logger logger = LoggerFactory.getLogger(ExecuteReportingActions.class);
 
   private PublicHealthMessagesDao phDao;
-    
+
   @Value("${encounter.has.changed.enable:false}")
   Boolean encounterChangeEnabled;
 
@@ -67,56 +65,60 @@ public class ExecuteReportingActions extends BsaAction {
 
     return actStatus;
   }
-  
+
   public void setPhDao(PublicHealthMessagesDao phDao) {
-	  this.phDao = phDao;
+    this.phDao = phDao;
   }
-  
+
   public PublicHealthMessagesDao getPhDao() {
     return phDao;
   }
-  
-    
+
   @Override
   public Boolean conditionsMet(KarProcessingData kd, EhrQueryService ehrService) {
-	  Boolean retval = super.conditionsMet(kd, ehrService);
-	  if (Boolean.TRUE.equals(retval) && encounterChangeEnabled) {		  
-		  retval = isEncounterChanged(kd);
-	  }
-	  return retval;
+    Boolean retval = super.conditionsMet(kd, ehrService);
+    if (Boolean.TRUE.equals(retval) && encounterChangeEnabled) {
+      retval = isEncounterChanged(kd);
+    }
+    return retval;
   }
 
   private Boolean isEncounterChanged(KarProcessingData kd) {
-	  boolean retval = true;
-	  NotificationContext context = kd.getNotificationContext();
-	  if (context != null) {
-		  PublicHealthMessage msg = getPublicHealthMessage(context, kd);
-		  if (msg.getSubmittedFhirData() != null) {			  
-			  Bundle bundle = (Bundle) jsonParser.parseResource(msg.getSubmittedFhirData());
-			  Encounter encounter = BsaServiceUtils.findEncounterFromBundle(bundle);
-			  if (encounter != null && kd.getContextEncounter() != null) {
-				  logger.info("Last submitted Encounter Id: {}, lastUpdate: {}", encounter.getId(),
-						  encounter.getMeta().getLastUpdated());
-				  retval = ObjectUtils.compare(encounter.getMeta().getLastUpdated(),
-						  kd.getContextEncounter().getMeta().getLastUpdated()) != 0;
-				  logger.info("Encounter {} is changed: {}", encounter.getIdElement().getIdPart(), retval);
-			  }
-		  }
-	  }
-	  return retval;
+    boolean retval = true;
+    NotificationContext context = kd.getNotificationContext();
+    if (context != null) {
+      PublicHealthMessage msg = getPublicHealthMessage(context, kd);
+      if (msg.getSubmittedFhirData() != null) {
+        Bundle bundle = (Bundle) jsonParser.parseResource(msg.getSubmittedFhirData());
+        Encounter encounter = BsaServiceUtils.findEncounterFromBundle(bundle);
+        if (encounter != null && kd.getContextEncounter() != null) {
+          logger.info(
+              "Last submitted Encounter Id: {}, lastUpdate: {}",
+              encounter.getId(),
+              encounter.getMeta().getLastUpdated());
+          retval =
+              ObjectUtils.compare(
+                      encounter.getMeta().getLastUpdated(),
+                      kd.getContextEncounter().getMeta().getLastUpdated())
+                  != 0;
+          logger.info("Encounter {} is changed: {}", encounter.getIdElement().getIdPart(), retval);
+        }
+      }
+    }
+    return retval;
   }
 
-  private PublicHealthMessage getPublicHealthMessage(NotificationContext nc, KarProcessingData data) {
-	  Map<String, String> searchParams = new HashMap<>();
-	  searchParams.put(PublicHealthMessagesDaoImpl.FHIR_SERVER_URL, nc.getFhirServerBaseUrl());
-	  searchParams.put(PublicHealthMessagesDaoImpl.PATIENT_ID, nc.getPatientId());
-	  searchParams.put(PublicHealthMessagesDaoImpl.NOTIFIED_RESOURCE_ID, nc.getNotificationResourceId());
-	  searchParams.put(PublicHealthMessagesDaoImpl.NOTIFIED_RESOURCE_TYPE, nc.getNotificationResourceType());
-	  List<PublicHealthMessage> messages = phDao.getPublicHealthMessage(searchParams);
-	  if (messages != null && !messages.isEmpty())
-		  return messages.get(0);
-	  else
-		  return null;
+  private PublicHealthMessage getPublicHealthMessage(
+      NotificationContext nc, KarProcessingData data) {
+    Map<String, String> searchParams = new HashMap<>();
+    searchParams.put(PublicHealthMessagesDaoImpl.FHIR_SERVER_URL, nc.getFhirServerBaseUrl());
+    searchParams.put(PublicHealthMessagesDaoImpl.PATIENT_ID, nc.getPatientId());
+    searchParams.put(
+        PublicHealthMessagesDaoImpl.NOTIFIED_RESOURCE_ID, nc.getNotificationResourceId());
+    searchParams.put(
+        PublicHealthMessagesDaoImpl.NOTIFIED_RESOURCE_TYPE, nc.getNotificationResourceType());
+    List<PublicHealthMessage> messages = phDao.getPublicHealthMessage(searchParams);
+    if (messages != null && !messages.isEmpty()) return messages.get(0);
+    else return null;
   }
-
 }

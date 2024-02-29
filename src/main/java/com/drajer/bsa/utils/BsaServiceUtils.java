@@ -501,7 +501,7 @@ public class BsaServiceUtils {
 
     return header;
   }
-  
+
   /**
    * The method takes a FHIR Resource and checks to see if the Document Bundle contains a Document
    * Reference resource When a Document Reference resource is found, it saves the attachment part of
@@ -736,26 +736,25 @@ public class BsaServiceUtils {
 
     return state;
   }
-  
-	/**
-	 * @param res
-	 * @return the first encounter in the bundle
-	 */
-	public static Encounter findEncounterFromBundle(Resource res) {
-		Encounter encounter = null;
-	    if (res.getResourceType() == ResourceType.Bundle) {
-	        Bundle b = (Bundle) res;
-	        List<BundleEntryComponent> becs = b.getEntry();
-	        for (BundleEntryComponent bec : becs) {
-	        	if (bec.getResource().getResourceType() == ResourceType.Bundle) {
-	        		encounter = findEncounterFromBundle(bec.getResource());
-	        	} else if (bec.getResource().getResourceType() == ResourceType.Encounter) {
-	        		return (Encounter) bec.getResource();	        		
-	        	}
-	        }
-	    }
 
-	    return encounter;
-	  }
+  /**
+   * @param res
+   * @return the first encounter in the bundle
+   */
+  public static Encounter findEncounterFromBundle(Resource res) {
+    Encounter encounter = null;
+    if (res.getResourceType() == ResourceType.Bundle) {
+      Bundle b = (Bundle) res;
+      List<BundleEntryComponent> becs = b.getEntry();
+      for (BundleEntryComponent bec : becs) {
+        if (bec.getResource().getResourceType() == ResourceType.Bundle) {
+          encounter = findEncounterFromBundle(bec.getResource());
+        } else if (bec.getResource().getResourceType() == ResourceType.Encounter) {
+          return (Encounter) bec.getResource();
+        }
+      }
+    }
 
+    return encounter;
+  }
 }

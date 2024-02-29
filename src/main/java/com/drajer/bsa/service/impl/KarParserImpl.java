@@ -10,7 +10,6 @@ import com.drajer.bsa.kar.action.CheckResponse;
 import com.drajer.bsa.kar.action.CreateReport;
 import com.drajer.bsa.kar.action.EvaluateMeasure;
 import com.drajer.bsa.kar.action.ExecuteReportingActions;
-import com.drajer.bsa.kar.action.InitiateReporting;
 import com.drajer.bsa.kar.action.SubmitReport;
 import com.drajer.bsa.kar.action.ValidateReport;
 import com.drajer.bsa.kar.condition.BsaCqlCondition;
