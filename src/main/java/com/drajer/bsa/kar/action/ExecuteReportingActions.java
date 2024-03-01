@@ -88,7 +88,7 @@ public class ExecuteReportingActions extends BsaAction {
     NotificationContext context = kd.getNotificationContext();
     if (context != null) {
       PublicHealthMessage msg = getPublicHealthMessage(context, kd);
-      if (msg.getSubmittedFhirData() != null) {
+      if (msg != null && msg.getSubmittedFhirData() != null) {
         Bundle bundle = (Bundle) jsonParser.parseResource(msg.getSubmittedFhirData());
         Encounter encounter = BsaServiceUtils.findEncounterFromBundle(bundle);
         if (encounter != null && kd.getContextEncounter() != null) {
