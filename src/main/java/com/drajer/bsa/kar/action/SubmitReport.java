@@ -366,7 +366,7 @@ public class SubmitReport extends BsaAction {
 
         logger.info(" Trying to invoke $process-message to: {}", submissionEndpoint);
         response = operation.encodedJson().execute();
-        logger.info(" Response Received from process message ");
+        logger.info(" Response Received from process message, reqId = {} ", data.getxRequestId());
         responseBundle = (Bundle) response;
       } catch (InvalidRequestException ex) {
         String myResp = ex.getResponseBody();

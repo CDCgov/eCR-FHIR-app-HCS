@@ -4,7 +4,9 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.apache.commons.lang3.ObjectUtils;
 import org.hl7.fhir.r4.model.CanonicalType;
+import org.hl7.fhir.r4.model.Encounter;
 import org.hl7.fhir.r4.model.Meta;
 import org.hl7.fhir.r4.model.OperationOutcome;
 import org.hl7.fhir.r4.model.OperationOutcome.IssueSeverity;
@@ -62,5 +64,21 @@ public class ActionUtils {
     }
 
     return retVal;
+  }
+
+  public static Boolean isEncounterChanged(Encounter encounter1, Encounter encounter2) {
+    // check lastUpdated
+    Boolean retval =
+        (ObjectUtils.compare(
+                    encounter1.getMeta().getLastUpdated(), encounter2.getMeta().getLastUpdated())
+                != 0)
+            || (ObjectUtils.compare(
+                    encounter1.getPeriod().getStart(), encounter2.getPeriod().getStart())
+                != 0)
+            || (ObjectUtils.compare(
+                    encounter1.getPeriod().getEnd(), encounter2.getPeriod().getEnd())
+                != 0);
+    logger.info("Encounter {} is changed: {}", encounter1.getIdElement().getIdPart(), retval);
+    return retval;
   }
 }

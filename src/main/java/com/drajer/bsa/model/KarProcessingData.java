@@ -171,6 +171,8 @@ public class KarProcessingData {
   /** The type of job to be executed on the infrastructure */
   private BsaJobType jobType;
 
+  private Boolean disableChangeDetect;
+
   public void addActionOutput(String actionId, Resource res) {
 
     if (actionOutputData.containsKey(actionId)) {
@@ -866,5 +868,13 @@ public class KarProcessingData {
     }
 
     return false;
+  }
+
+  public Boolean getDisableChangeDetect() {
+    return disableChangeDetect;
+  }
+
+  public void setDisableChangeDetect(Boolean disableChangeDetect) {
+    this.disableChangeDetect = disableChangeDetect;
   }
 }

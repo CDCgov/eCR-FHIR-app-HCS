@@ -10,7 +10,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-import javax.persistence.UniqueConstraint;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hl7.fhir.r4.model.Resource;
@@ -30,16 +29,7 @@ import org.slf4j.LoggerFactory;
  * @since 2021-04-15
  */
 @Entity
-@Table(
-    name = "notification_context",
-    uniqueConstraints =
-        @UniqueConstraint(
-            columnNames = {
-              "fhir_server_base_url",
-              "patient_id",
-              "notification_resource_id",
-              "notification_resource_type"
-            }))
+@Table(name = "notification_context")
 @DynamicUpdate
 public class NotificationContext {
 

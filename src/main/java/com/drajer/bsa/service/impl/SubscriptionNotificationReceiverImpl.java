@@ -15,6 +15,7 @@ import com.drajer.bsa.model.PatientLaunchContext;
 import com.drajer.bsa.service.KarProcessor;
 import com.drajer.bsa.service.SubscriptionNotificationReceiver;
 import com.drajer.bsa.utils.SubscriptionUtils;
+import com.drajer.ecrapp.util.MDCUtils;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.HashSet;
@@ -128,7 +129,11 @@ public class SubscriptionNotificationReceiverImpl implements SubscriptionNotific
                   kd.setKarStatus(ks);
                   kd.setxRequestId(nc.getxRequestId());
                   kd.setxCorrelationId(nc.getxCorrelationId());
-
+                  Boolean disableChangeDetect =
+                      Boolean.valueOf(request.getHeader("Disable-Changedetect"));
+                  kd.setDisableChangeDetect(disableChangeDetect);
+                  MDCUtils.addDisableChangeDetect(disableChangeDetect.toString());
+                  logger.info("Disable-Changedetect = {}", disableChangeDetect);
                   if (nc.getNotifiedResource() != null) {
                     logger.info("Adding notified resource to the set of inputs ");
                     Map<ResourceType, Set<Resource>> res = new EnumMap<>(ResourceType.class);

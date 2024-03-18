@@ -12,7 +12,6 @@ import com.drajer.bsa.utils.BsaServiceUtils;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.apache.commons.lang3.ObjectUtils;
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Encounter;
 import org.slf4j.Logger;
@@ -77,10 +76,15 @@ public class ExecuteReportingActions extends BsaAction {
   @Override
   public Boolean conditionsMet(KarProcessingData kd, EhrQueryService ehrService) {
     Boolean retval = super.conditionsMet(kd, ehrService);
-    if (Boolean.TRUE.equals(retval) && encounterChangeEnabled) {
-      retval = isEncounterChanged(kd);
+    if (Boolean.TRUE.equals(kd.getDisableChangeDetect())) {
+      logger.info("-- Encounter Change is DISABLED for {} --", kd.getContextEncounterId());
+      return retval;
     }
-    return retval;
+    if (Boolean.TRUE.equals(retval) && encounterChangeEnabled) {
+      return isEncounterChanged(kd);
+    } else {
+      return retval;
+    }
   }
 
   private Boolean isEncounterChanged(KarProcessingData kd) {
@@ -92,16 +96,9 @@ public class ExecuteReportingActions extends BsaAction {
         Bundle bundle = (Bundle) jsonParser.parseResource(msg.getSubmittedFhirData());
         Encounter encounter = BsaServiceUtils.findEncounterFromBundle(bundle);
         if (encounter != null && kd.getContextEncounter() != null) {
+          retval = ActionUtils.isEncounterChanged(encounter, kd.getContextEncounter());
           logger.info(
-              "Last submitted Encounter Id: {}, lastUpdate: {}",
-              encounter.getId(),
-              encounter.getMeta().getLastUpdated());
-          retval =
-              ObjectUtils.compare(
-                      encounter.getMeta().getLastUpdated(),
-                      kd.getContextEncounter().getMeta().getLastUpdated())
-                  != 0;
-          logger.info("Encounter {} is changed: {}", encounter.getIdElement().getIdPart(), retval);
+              "-- Encounter {} is changed: {} --", encounter.getIdElement().getIdPart(), retval);
         }
       }
     }

@@ -74,7 +74,7 @@ public class PublicHealthMessagesDaoImpl extends AbstractDao implements PublicHe
   public List<PublicHealthMessage> getPublicHealthMessage(Map<String, String> searchParams) {
     Criteria criteria = getSession().createCriteria(PublicHealthMessage.class);
     prepareCriteria(criteria, searchParams);
-    return criteria.addOrder(Order.desc(SUBMITTED_VERSION_NUMBER)).list();
+    return criteria.addOrder(Order.desc(SUBMITTED_VERSION_NUMBER)).setMaxResults(1).list();
   }
 
   @Override

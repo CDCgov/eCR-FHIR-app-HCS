@@ -20,6 +20,7 @@ import com.drajer.bsa.service.KarExecutionStateService;
 import com.drajer.bsa.service.KarProcessor;
 import com.drajer.bsa.service.NotificationContextService;
 import com.drajer.bsa.utils.BsaServiceUtils;
+import com.drajer.ecrapp.util.MDCUtils;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
@@ -179,7 +180,8 @@ public class KarProcessorImpl implements KarProcessor {
         kd.setxRequestId(data.getxRequestId());
         kd.setxCorrelationId(nc.getxCorrelationId());
         kd.setJobType(data.getJobType());
-
+        kd.setDisableChangeDetect(
+            Boolean.valueOf(data.getMdcContext().get(MDCUtils.MDC_DISABLE_CHANGE_DETECT)));
         // Get existing ph message for the same patient/encounter/kar/fhirserver combination.
         PublicHealthMessage phm = getPublicHealthMessage(nc, kd);
         if (phm != null && phm.getTriggerMatchStatus() != null) {
