@@ -1,0 +1,106 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 839 (0x347)
+        Signature Algorithm: sha512WithRSAEncryption
+        Issuer: C = FR, O = IHE Europe, CN = IHE Europe CA, OU = Gazelle
+        Validity
+            Not Before: Feb 18 06:24:53 2021 GMT
+            Not After : Feb 18 06:24:53 2031 GMT
+        Subject: C = US, O = Epic, CN = EHR_Epic_2021, emailAddress = pkasteli@epic.com
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                RSA Public-Key: (2048 bit)
+                Modulus:
+                    00:aa:28:b2:2f:f7:6f:ef:fb:c5:f7:fd:30:a7:49:
+                    a1:69:ab:ae:3c:78:cf:30:da:c7:14:4d:63:a8:96:
+                    0b:2b:31:dd:48:8f:bd:cc:a8:54:f5:0b:cb:3c:5e:
+                    28:a3:d7:47:a4:cf:35:ae:9c:1e:ec:52:a3:21:a7:
+                    36:b2:dd:a5:e9:62:7c:63:d4:b2:8d:db:59:ee:c6:
+                    2e:08:e4:88:0a:48:60:b1:ce:ab:4f:25:7f:35:63:
+                    12:4d:97:2c:83:d2:90:fb:b0:f1:39:2d:38:e8:5a:
+                    a5:42:b2:12:6f:64:a7:c2:c6:c3:1f:68:f4:c6:42:
+                    32:5a:ff:0b:06:9f:e1:22:15:d3:72:83:9b:1f:a2:
+                    b9:f1:bb:61:d2:dc:e2:b4:67:fb:49:b7:72:cd:2d:
+                    a3:f4:d2:4e:ef:6e:25:e4:85:48:31:2d:10:ff:ea:
+                    db:a8:b4:75:55:ed:b1:52:e7:6a:6a:d8:88:20:f9:
+                    e4:95:09:34:d6:69:a2:e9:2a:11:42:da:cf:e8:63:
+                    2a:ca:36:54:5d:67:90:86:d7:c0:f8:3d:4b:42:1c:
+                    f1:ce:74:fa:b3:c7:3a:5a:a0:38:8d:08:db:14:66:
+                    1d:d6:5c:f3:4f:3f:70:35:78:23:e0:9d:6e:55:c2:
+                    4f:3a:e5:64:5a:4b:cc:59:77:e3:31:6e:01:b9:3f:
+                    ad:29
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Subject Alternative Name: 
+                DNS:ihe.epic.com, DNS:epic10.ihe-us-test.net, DNS:epic10, DNS:*.ihe.epic.com, DNS:*.epic.com, DNS:localhost, DNS:Epic_2021, DNS:EHR_Epic_2021, DNS:epic-ihe21ic.ihe.epic.com, DNS:epic-ihe21ic, DNS:infrastructure.ihe.epic.com, DNS:infrastructure, DNS:127.0.0.1, DNS:199.204.56.248
+            X509v3 CRL Distribution Points: 
+
+                Full Name:
+                  URI:https://gazelle.ihe.net/pki/crl/2656/cacrl.crl
+
+            Netscape CA Revocation Url: 
+                https://gazelle.ihe.net/pki/crl/2656/cacrl.crl
+            Netscape Revocation Url: 
+                https://gazelle.ihe.net/pki/crl/2656/cacrl.crl
+            X509v3 Basic Constraints: critical
+                CA:FALSE
+            X509v3 Subject Key Identifier: 
+                55:C3:98:52:A0:59:AA:68:58:02:E6:47:11:20:7B:1C:73:75:87:E4
+            X509v3 Authority Key Identifier: 
+                keyid:1E:43:73:B4:55:FD:2A:AD:5F:A1:EC:8A:26:89:94:30:6D:62:39:8F
+
+            X509v3 Key Usage: critical
+                Digital Signature, Non Repudiation, Key Encipherment, Data Encipherment
+            Netscape Cert Type: 
+                SSL Client, SSL Server, S/MIME
+            X509v3 Extended Key Usage: 
+                TLS Web Client Authentication, E-mail Protection, Microsoft Smartcard Login, TLS Web Server Authentication
+    Signature Algorithm: sha512WithRSAEncryption
+         39:4d:c7:e9:af:7a:e2:b5:35:97:72:bc:a8:7d:d2:2d:57:b8:
+         1e:3f:07:a8:69:07:dc:0f:2d:7f:f9:43:eb:2a:56:eb:b3:57:
+         0a:c9:8b:96:6d:6a:8b:36:a4:d2:06:7f:8b:d1:54:8b:97:7e:
+         80:bd:4f:6d:9b:52:0b:34:b6:7e:c4:8c:b5:9d:54:f6:89:ac:
+         9c:67:da:cf:b2:f9:98:96:35:2e:8c:19:ce:70:dd:20:5e:d0:
+         68:bb:05:0c:a2:76:76:9d:dc:96:a1:a3:bb:95:91:53:c1:7a:
+         cf:74:c3:17:90:5b:99:ae:15:72:f9:cd:4c:09:35:2b:c3:59:
+         91:fb:12:a6:ee:e4:ec:16:cd:ad:f3:48:95:e1:75:f9:cd:2d:
+         f5:f2:f0:fc:36:39:cc:59:39:81:26:55:ed:ec:cc:97:2b:e7:
+         d8:63:5f:c1:d3:02:31:f2:ae:ce:d4:a8:36:d1:a9:93:0d:01:
+         fa:5f:de:66:e5:04:57:3f:12:be:0c:cf:55:fd:29:fd:05:0f:
+         7b:99:96:e1:f2:2c:b0:48:10:c3:71:90:0d:cb:85:11:7a:05:
+         8a:07:bb:a5:61:be:86:3d:94:dd:3c:6e:34:db:e2:67:df:19:
+         d0:13:41:cc:fd:96:9e:ca:b0:01:8f:37:38:76:09:6b:b5:fc:
+         c0:b4:4d:b6
+-----BEGIN CERTIFICATE-----
+MIIFdzCCBF+gAwIBAgICA0cwDQYJKoZIhvcNAQENBQAwTDELMAkGA1UEBhMCRlIx
+EzARBgNVBAoMCklIRSBFdXJvcGUxFjAUBgNVBAMMDUlIRSBFdXJvcGUgQ0ExEDAO
+BgNVBAsMB0dhemVsbGUwHhcNMjEwMjE4MDYyNDUzWhcNMzEwMjE4MDYyNDUzWjBW
+MQswCQYDVQQGEwJVUzENMAsGA1UECgwERXBpYzEWMBQGA1UEAwwNRUhSX0VwaWNf
+MjAyMTEgMB4GCSqGSIb3DQEJARYRcGthc3RlbGlAZXBpYy5jb20wggEiMA0GCSqG
+SIb3DQEBAQUAA4IBDwAwggEKAoIBAQCqKLIv92/v+8X3/TCnSaFpq648eM8w2scU
+TWOolgsrMd1Ij73MqFT1C8s8Xiij10ekzzWunB7sUqMhpzay3aXpYnxj1LKN21nu
+xi4I5IgKSGCxzqtPJX81YxJNlyyD0pD7sPE5LTjoWqVCshJvZKfCxsMfaPTGQjJa
+/wsGn+EiFdNyg5sfornxu2HS3OK0Z/tJt3LNLaP00k7vbiXkhUgxLRD/6tuotHVV
+7bFS52pq2Igg+eSVCTTWaaLpKhFC2s/oYyrKNlRdZ5CG18D4PUtCHPHOdPqzxzpa
+oDiNCNsUZh3WXPNPP3A1eCPgnW5Vwk865WRaS8xZd+MxbgG5P60pAgMBAAGjggJX
+MIICUzCB6wYDVR0RBIHjMIHgggxpaGUuZXBpYy5jb22CFmVwaWMxMC5paGUtdXMt
+dGVzdC5uZXSCBmVwaWMxMIIOKi5paGUuZXBpYy5jb22CCiouZXBpYy5jb22CCWxv
+Y2FsaG9zdIIJRXBpY18yMDIxgg1FSFJfRXBpY18yMDIxghllcGljLWloZTIxaWMu
+aWhlLmVwaWMuY29tggxlcGljLWloZTIxaWOCG2luZnJhc3RydWN0dXJlLmloZS5l
+cGljLmNvbYIOaW5mcmFzdHJ1Y3R1cmWCCTEyNy4wLjAuMYIOMTk5LjIwNC41Ni4y
+NDgwPwYDVR0fBDgwNjA0oDKgMIYuaHR0cHM6Ly9nYXplbGxlLmloZS5uZXQvcGtp
+L2NybC8yNjU2L2NhY3JsLmNybDA9BglghkgBhvhCAQQEMBYuaHR0cHM6Ly9nYXpl
+bGxlLmloZS5uZXQvcGtpL2NybC8yNjU2L2NhY3JsLmNybDA9BglghkgBhvhCAQME
+MBYuaHR0cHM6Ly9nYXplbGxlLmloZS5uZXQvcGtpL2NybC8yNjU2L2NhY3JsLmNy
+bDAMBgNVHRMBAf8EAjAAMB0GA1UdDgQWBBRVw5hSoFmqaFgC5kcRIHscc3WH5DAf
+BgNVHSMEGDAWgBQeQ3O0Vf0qrV+h7IomiZQwbWI5jzAOBgNVHQ8BAf8EBAMCBPAw
+EQYJYIZIAYb4QgEBBAQDAgXgMDMGA1UdJQQsMCoGCCsGAQUFBwMCBggrBgEFBQcD
+BAYKKwYBBAGCNxQCAgYIKwYBBQUHAwEwDQYJKoZIhvcNAQENBQADggEBADlNx+mv
+euK1NZdyvKh90i1XuB4/B6hpB9wPLX/5Q+sqVuuzVwrJi5Ztaos2pNIGf4vRVIuX
+foC9T22bUgs0tn7EjLWdVPaJrJxn2s+y+ZiWNS6MGc5w3SBe0Gi7BQyidnad3Jah
+o7uVkVPBes90wxeQW5muFXL5zUwJNSvDWZH7Eqbu5OwWza3zSJXhdfnNLfXy8Pw2
+OcxZOYEmVe3szJcr59hjX8HTAjHyrs7UqDbRqZMNAfpf3mblBFc/Er4Mz1X9Kf0F
+D3uZluHyLLBIEMNxkA3LhRF6BYoHu6VhvoY9lN08bjTb4mffGdATQcz9lp7KsAGP
+Nzh2CWu1/MC0TbY=
+-----END CERTIFICATE-----
